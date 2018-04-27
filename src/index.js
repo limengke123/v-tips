@@ -30,17 +30,22 @@ const install = function (Vue, options = {}) {
     bind (el,binding) {
 
       clearEvent.call(el)
-      console.log(_getInstance())
 
       el._mouseenterhandler = function () {
         const instance = _getInstance()
         instance.$props.reference = el
-        instance.$props.content = binding.value
-        instance.$data.isShow = true
+        if (typeof binding.value === 'object') {
+          console.log(instance.$props.content)
+          Object.assign(instance.$props, binding.value)
+          console.log(instance.$props.content)
+        } else {
+          instance.$props.content = binding.value
+        }
+        instance.show()
       }
       el._mouseleavehandler = function () {
         const instance = _getInstance()
-        instance.$data.isShow = false
+        instance.hide()
       }
       el.addEventListener('mouseenter',el._mouseenterhandler)
       el.addEventListener('mouseleave',el._mouseleavehandler)
