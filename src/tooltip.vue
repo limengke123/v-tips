@@ -1,12 +1,12 @@
 <template lang="pug">
-  div.tooltip-container
+  div.tooltip-container(v-show="isShow", ref="popper")
     .content
       .tooltip-arrow
       .tooltip-inner {{content}}
 </template>
 
 <script>
-import popper from 'popper.js'
+import Popper from 'popper.js'
 export default {
   props: {
     reference:{
@@ -19,6 +19,25 @@ export default {
     content: {
       type: String,
       default: ""
+    },
+    placement:{
+      type: String,
+      default: 'bottom'
+    },
+    options: {
+      type: Object,
+      default () {
+        return {
+          modifiers: {
+            computeStyle: {
+              gpuAcceleration: false
+            },
+            preventOverflow: {
+              boundariesElement: 'viewport'
+            }
+          }
+        }
+      }
     }
   },
   data () {
@@ -27,8 +46,31 @@ export default {
     }
   },
   methods: {
-    createPopper () {
-
+    getPopper () {
+      if (!this.popper) {
+        let options = this.$props.options
+        options.placement = this.$props.placement
+        options.onCreate = () => {
+          console.log(`popper has been created`)
+        }
+        this.popper = new Popper(this.$props.reference, this.$refs.popper, options)
+      }
+      return this.popper
+    },
+    updatePopper () {
+      this.getPopper().update()
+    },
+    destroy () {
+      if (this.$data.isShow) return
+      if (this.popper) {
+        this.popper.destroy()
+        this.popper = null
+      }
+    }
+  },
+  watch: {
+    isShow () {
+      this.updatePopper()
     }
   }
 }

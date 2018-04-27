@@ -1,14 +1,25 @@
 // eslint-disable
-import {destroy, getInstance} from './tooltip.js'
+import {getInstance} from './tooltip.js'
 
-const mouseenterHandler = function () {
-  const instance = getInstance()
-  instance.isShow = true
+let _instance
+
+// const a = getInstance()
+// console.log(a)
+
+const _getInstance = function () {
+  _instance = _instance || getInstance()
+  return _instance
 }
 
-const mouseleaveHandler = function () {
-  const instance = getInstance()
-  instance.isShow = false
+const _destroy = function () {
+  if (!_instance) return
+  _instance.$destroy()
+  document.removeChild(document.getElementById('$$tipscontainner'))
+}
+
+const clearEvent = function () {
+  this._mouseenterhandler && (this._mouseenterhandler = null)
+  this._mouseleavehandler && (this._mouseleavehandler= null)
 }
 
 const install = function (Vue, options = {}) {
@@ -17,14 +28,19 @@ const install = function (Vue, options = {}) {
   const name = options.directiveName || 'tips'
   Vue.directive(name, {
     bind (el,binding) {
+
+      clearEvent.call(el)
+      console.log(_getInstance())
+
       el._mouseenterhandler = function () {
-        const instance = getInstance()
+        const instance = _getInstance()
+        instance.$props.reference = el
         instance.$props.content = binding.value
         instance.$data.isShow = true
       }
       el._mouseleavehandler = function () {
-        const instance = getInstance()
-        instance.$props.isShow = false
+        const instance = _getInstance()
+        instance.$data.isShow = false
       }
       el.addEventListener('mouseenter',el._mouseenterhandler)
       el.addEventListener('mouseleave',el._mouseleavehandler)
