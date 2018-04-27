@@ -16,7 +16,8 @@ export default {
   data () {
     return {
       options: {
-        content: 'tip测试文字'
+        content: 'tip测试文字',
+        placement: 'top'
       }
     }
   }

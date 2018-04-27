@@ -74,6 +74,8 @@ export default {
     show () {
       if (this.timer) clearTimeout(this.timer)
 
+      this.updatePopper()
+
       this.timer = setTimeout(() => {
         this.isShow = true
       }, this.$props.delay)
@@ -96,7 +98,7 @@ export default {
         this.popper.reference = this.$props.reference
         this.updatePopper()
       }
-    }
+    },
   }
 }
 </script>
@@ -117,6 +119,7 @@ export default {
       height 0
       border-color transparent
       border-style solid
+      box-sizing border-box
     .tooltip-inner
       box-sizing border-box
       max-width 250px
@@ -134,26 +137,30 @@ export default {
 <style lang="stylus" scoped>
   // 解决箭头问题
 .tooltip-container
-  .tooltip-arrow
-    border-top-color rgba(70,76,91,.9)
-
   &[x-placement^=top]
     padding 5px 0 8px
     .tooltip-arrow
       bottom 3px
       border-width 5px 5px 0
+      border-top-color rgba(70,76,91,.9)
   &[x-placement^=left]
+    padding 0 8px 0 5px
     .tooltip-arrow
       right 3px
       border-width 5px 0 5px 5px
+      border-left-color rgba(70,76,91,.9)
   &[x-placement^=bottom]
+    padding 8px 0 5px
     .tooltip-arrow
       top 3px
       border-width 0 5px 5px
+      border-bottom-color rgba(70,76,91,.9)
   &[x-placement^=right]
+    padding 0 5px 0 8px
     .tooltip-arrow
       left 3px
       border-width 5px 5px 5px 0
+      border-right-color rgba(70,76,91,.9)
 
   // 顶部位置细调
   &[x-placement=top-start]
