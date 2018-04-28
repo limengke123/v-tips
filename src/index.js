@@ -35,10 +35,18 @@ const install = function (Vue, options = {}) {
         const instance = _getInstance()
         instance.$props.reference = el
         if (typeof binding.value === 'object') {
-          console.log(instance.$props.content)
-          Object.assign(instance.$props, binding.value)
-          console.log(instance.$props.content)
+          // 这里有单例模式的缺点 每次修改 我都要去把popper里面的值给修改了,因为所有用这个指令的节点都用的一个popper
+          if( "placement" in binding.value) {
+            Object.assign(instance.$props, binding.value)
+            instance.updatePlacement(binding.value.placement)
+          } else if (instance.popper && instance.popper.options.placement !== instance.$options.props.placement.default) {
+              Object.assign(instance.$props, binding.value)
+              instance.updatePlacement(instance.$options.props.placement.default)
+          }
         } else {
+          if (instance.popper && instance.popper.options.placement !== instance.$options.props.placement.default) {
+            instance.updatePlacement(instance.$options.props.placement.default)
+          }
           instance.$props.content = binding.value
         }
         instance.show()
