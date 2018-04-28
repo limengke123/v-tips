@@ -70,12 +70,6 @@ export default {
     updatePopper () {
       this.getPopper().update()
     },
-    updatePlacement (value)　{
-      if (this.popper) {
-        this.popper.options.placement = value
-        this.updatePopper()
-      }
-    },
     destroy () {
       if (this.$data.isShow) return
       if (this.popper) {
@@ -104,12 +98,6 @@ export default {
   watch: {
     isShow () {
       this.updatePopper()
-    },
-    reference () {
-      if (this.popper) {
-        this.popper.reference = this.$props.reference
-        this.updatePopper()
-      }
     }
   }
 }
@@ -229,7 +217,7 @@ export default {
   .fade-enter, .fade-leave-to
     opacity 0
   .scale-enter-active, .scale-leave-active
-    transition transform 2s, opacity .3s
+    transition transform .5s, opacity .3s
   .scale-enter, .scale-leave-to
     transform scale(0.8)
     opacity 0
