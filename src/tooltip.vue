@@ -70,12 +70,6 @@ export default {
     updatePopper () {
       this.getPopper().update()
     },
-    updatePlacement (value)　{
-      if (this.popper) {
-        this.popper.options.placement = value
-        this.updatePopper()
-      }
-    },
     destroy () {
       if (this.$data.isShow) return
       if (this.popper) {
@@ -104,12 +98,6 @@ export default {
   watch: {
     isShow () {
       this.updatePopper()
-    },
-    reference () {
-      if (this.popper) {
-        this.popper.reference = this.$props.reference
-        this.updatePopper()
-      }
     }
   }
 }
