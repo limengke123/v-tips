@@ -26,7 +26,6 @@ const generateInstance = function (index) {
 const _getInstance = function () {
   // const instance_string = this.getAttribute('data-instance')
   // return JSON.parse(instance_string)
-  console.log(this)
   const index = this.getAttribute('data-index')
   return instanceList[index]
 }
