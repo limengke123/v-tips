@@ -1,8 +1,9 @@
 <template lang="pug">
-  div.tooltip-container(v-show="isShow", ref="popper")
-    .content
-      .tooltip-arrow
-      .tooltip-inner {{content}}
+  transition(name="fade")
+    div.tooltip-container(v-show="isShow", ref="popper")
+      .content
+        .tooltip-arrow
+        .tooltip-inner {{content}}
 </template>
 
 <script>
@@ -215,4 +216,11 @@ export default {
   &[x-placement=right-end]
     .tooltip-arrow
       bottom 8px
+</style>
+
+<style lang="stylus" scoped>
+  .fade-enter-active, .fade-leave-active
+    transition opacity .5s
+  .fade-enter, .fade-leave-to
+    opacity 0
 </style>
