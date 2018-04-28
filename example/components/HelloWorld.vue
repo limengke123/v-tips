@@ -3,22 +3,10 @@
     .box1(v-tips="options") 测试很长很长很擦汗那个的文字
     br
     br
-    br
-    br
-    br
-    br
     .box1(v-tips="options1") 测试文字2
     br
     br
-    br
-    br
-    br
-    br
     .box1(v-tips="options2") 测试文字32
-    br
-    br
-    br
-    br
     br
     br
     .box1(v-tips="options3") 测试文字32

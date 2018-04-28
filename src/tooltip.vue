@@ -1,6 +1,11 @@
 <template lang="pug">
-  transition(name="fade")
-    div.tooltip-container(v-show="isShow", ref="popper")
+  transition(name="scale")
+    div.tooltip-container(
+    v-show="isShow",
+    ref="popper",
+    @mouseenter="show",
+    @mouseleave="hide"
+    )
       .content
         .tooltip-arrow
         .tooltip-inner {{content}}
@@ -81,7 +86,7 @@ export default {
     show () {
       if (this.timer) clearTimeout(this.timer)
 
-      this.updatePopper()
+      //this.updatePopper()
 
       this.timer = setTimeout(() => {
         this.isShow = true
@@ -222,5 +227,10 @@ export default {
   .fade-enter-active, .fade-leave-active
     transition opacity .5s
   .fade-enter, .fade-leave-to
+    opacity 0
+  .scale-enter-active, .scale-leave-active
+    transition transform 2s, opacity .3s
+  .scale-enter, .scale-leave-to
+    transform scale(0.8)
     opacity 0
 </style>
